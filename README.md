@@ -12,15 +12,4 @@ https://www.youtube.com/watch?v=U-YHyb2k2TM
 ✅ Mises à jour de l'interface utilisateur en temps réel
 
 
-## Installation
-### PowerShell
 
-```bash
-laravel new laravel12-react-crud
->> react
->> laravel
-# pour testing taper Entrée sans choisir
->> yes # npm install and npm run build
-```
-
-### PhpStorm

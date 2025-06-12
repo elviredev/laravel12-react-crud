@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { router } from '@inertiajs/react'
 import { Post } from '@/types/post'
+import { Toaster } from "@/components/ui/sonner"
+import { toast } from "sonner"
 
 interface Props {
     post?: Post | null;
@@ -51,24 +53,31 @@ const PostFormModal = ({post, closeModal, isOpen}: Props) => {
         data.append("picture", selectedFile);
       }
 
+      const successMessage = post?.id ? "Post updated successfully 😊" : "Post created successfully 😊";
+      const errorMessage = post?.id ? "Failed to update post 🙃" : "Failed to create post 🙃";
+
       if(post?.id) { // Modifier un article
         data.append("_method", "PUT");
         router.post(route('posts.update', post.id), data, {
           onSuccess: () => {
+            toast.success(successMessage)
             closeModal();
             router.reload();
           },
           onError: (errors) => {
+            toast.error(errorMessage)
             console.error(errors.message ||'Failed to update post.');
           }
         })
       } else { // Créer un article
         router.post(route('posts.store'), data, {
           onSuccess: () => {
+            toast.success(successMessage)
             closeModal();
             router.reload();
           },
           onError: (errors) => {
+            toast.error(errorMessage)
             console.error(errors.message ||'Failed to create post.');
           }
         })

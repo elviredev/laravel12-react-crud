@@ -3,7 +3,9 @@ import { type BreadcrumbItem } from '@/types';
 import { Head, router, usePage } from '@inertiajs/react';
 import PostFormModal from '@/components/PostFormModal';
 import { useState } from 'react';
-import { Post } from '@/types/post'
+import { Post } from '@/types/post';
+import { Toaster } from "@/components/ui/sonner"
+import { toast } from "sonner"
 
 const breadcrumbs: BreadcrumbItem[] = [
   {
@@ -30,9 +32,11 @@ export default function Posts() {
   const handleDelete = (id: number) => {
     router.delete(route('posts.destroy', id), {
       onSuccess: () => {
+        toast.success('Post deleted successfully 😊');
         router.reload();
       },
       onError: () => {
+        toast.error('Failed to delete post 🙃');
         console.error('Failed to delete post.');
       }
     });
@@ -42,6 +46,8 @@ export default function Posts() {
   return (
     <AppLayout breadcrumbs={breadcrumbs}>
       <Head title="Articles" />
+
+      <Toaster position="top-right" richColors />
 
       <div className="flex flex-col gap-6 p-6 bg-white text-black shadow-lg rounded-xl">
         <div className="flex justify-end ">

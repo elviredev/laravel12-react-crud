@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { router } from '@inertiajs/react'
-
-interface Post {
-    id?: number;
-    title: string;
-    content: string;
-    picture?: string;
-}
+import { Post } from '@/types/post'
 
 interface Props {
     post?: Post | null;
@@ -33,7 +27,7 @@ const PostFormModal = ({post, closeModal, isOpen}: Props) => {
             setPreview("");
             setSelectedFile(null)
         }
-    }, [post]);
+    }, [post, isOpen]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;

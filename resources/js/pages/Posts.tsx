@@ -3,6 +3,7 @@ import { type BreadcrumbItem } from '@/types';
 import { Head, router, usePage } from '@inertiajs/react';
 import PostFormModal from '@/components/PostFormModal';
 import { useState } from 'react';
+import { Post } from '@/types/post'
 
 const breadcrumbs: BreadcrumbItem[] = [
   {
@@ -11,6 +12,7 @@ const breadcrumbs: BreadcrumbItem[] = [
   },
 ];
 
+
 export default function Posts() {
 
   const { posts } = usePage<{ posts:
@@ -18,9 +20,9 @@ export default function Posts() {
   }>().props
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedPost, setSelectedPost] = useState(null);
+  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
 
-  const openModal = (post: null) => {
+  const openModal = (post: Post | null) => {
     setSelectedPost(post);
     setIsModalOpen(true);
   };
@@ -35,6 +37,7 @@ export default function Posts() {
       }
     });
   };
+
 
   return (
     <AppLayout breadcrumbs={breadcrumbs}>
@@ -72,7 +75,7 @@ export default function Posts() {
                     <img
                       src={post.picture}
                       alt={post.title}
-                      className="w-16 h-16 object-cover rounded-full"
+                      className="max-w-[80px] max-h-[80px] object-cover rounded-full"
                     /> : <p>No Picture</p>}
                 </td>
                 <td className="p-3">{post.title}</td>

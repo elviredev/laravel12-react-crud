@@ -58,8 +58,8 @@ export default function Posts() {
             Add Post
           </button>
         </div>
-
-        <table className="w-full border-collapse bg-white text-black shadow-sm rounded-lg ">
+        {/* Table pour écran médium et plus */}
+        <table className="w-full border-collapse bg-white text-black shadow-sm rounded-lg hidden md:table ">
           <thead>
           <tr className="bg-gray-100 text-gray-800 border-b">
             {['Picture', 'Title', 'Content', 'Actions'].map((header) => (
@@ -109,6 +109,47 @@ export default function Posts() {
           )}
           </tbody>
         </table>
+
+        {/* Cartes pour mobile */}
+        <div className="block md:hidden">
+          {posts.length ? (
+            posts.map((post) => (
+              <div key={post.id} className="boder rounded-lg shadow-sm p-4 mb-4 bg-white">
+                <div className="flex items-center gap-4 mb-2">
+                  {post.picture ? (
+                    <img
+                      src={post.picture}
+                      alt={post.title}
+                      className="max-w-[80px] max-h-[80px] object-cover rounded-full"
+                    />
+                  ) : (
+                    <div className="w-16 h-16 flex items-center justify-center bg-gray-200 rounded-full text-sm text-gray-500">No Picture</div>
+                  )}
+                  <h2 className="text-lg font-semibold">{post.title}</h2>
+                </div>
+
+                <p className="text-gray-700 mb-3">{post.content}</p>
+
+                <div className="flex justify-end gap-2">
+                  <button
+                    onClick={() => openModal(post)}
+                    className="bg-blue-500 text-sm text-white px-3 py-1 rounded"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDelete(post.id)}
+                    className="bg-red-500 text-sm text-white px-3 py-1 rounded"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            ))
+          ) : (
+            <p className="text-center text-gray-600">Pas d'articles</p>
+          )}
+        </div>
       </div>
 
       <PostFormModal
